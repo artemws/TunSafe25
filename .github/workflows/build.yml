@@ -2,36 +2,36 @@ name: Build APK
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 jobs:
   build:
-    name: Build APK with NDK
+    name: Build Debug APK
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout code
+    - name: Checkout source code
       uses: actions/checkout@v3
 
-    - name: Set up JDK
+    - name: Set up Java (for Android)
       uses: actions/setup-java@v3
       with:
-        distribution: 'temurin'
-        java-version: '17'
+        distribution: temurin
+        java-version: 17
 
     - name: Set up Android SDK
-      uses: android-actions/setup-android@v2
+      uses: android-actions/setup-android@v2.0.10
 
-    - name: Grant execute permission to gradlew
+    - name: Make Gradle executable
       run: chmod +x ./gradlew
 
-    - name: Build APK
+    - name: Build debug APK
       run: ./gradlew assembleDebug
 
-    - name: Upload APK
-      uses: actions/upload-artifact@v2   # ← исправлено с @v3 на @v2
+    - name: Upload built APK
+      uses: actions/upload-artifact@v2.3.1
       with:
         name: app-debug.apk
         path: app/build/outputs/apk/debug/app-debug.apk
