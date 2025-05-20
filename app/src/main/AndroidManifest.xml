@@ -3,6 +3,7 @@
 
     <application
         android:label="NativeApp"
+        android:exported="true"
         android:theme="@android:style/Theme.Material">
         <activity android:name=".MainActivity">
             <intent-filter>
